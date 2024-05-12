@@ -24,7 +24,7 @@ const createPuzzle = async (req, res, next) => {
     const newPuzzle = new Puzzle(req.body);
     const puzzleSaved = await newPuzzle.save();
     return res.status(201).json(puzzleSaved);
-  } catch {
+  } catch (error){
     return res.status(400).json("error " + error);
   }
 };
@@ -34,17 +34,17 @@ const updatePuzzle = async (req, res, next) => {
     const { id } = req.params;
     const newPuzzle = new Puzzle(req.body);
     newPuzzle._id = id;
-    const puzzleUpdated = await puzzle.findByIdAndUpdate(id, newPuzzle, {
+    const puzzleUpdated = await Puzzle.findByIdAndUpdate(id, newPuzzle, {
       new: true,
     });
     return res.status(200).json(puzzleUpdated);
-  } catch {
+  } catch (error){
     return res.status(400).json("error " + error);
   }
 };
 
 
-const deletpPuzzles= async (req,res,next)=>{
+const deletePuzzles= async (req,res,next)=>{
     try{
        const {id}= req.params;
        const puzzleDeleted= await Puzzle.findByIdAndDelete(id);
@@ -60,4 +60,4 @@ const deletpPuzzles= async (req,res,next)=>{
 };
 
 
-module.exports = { getAllPuzzles, getPuzzle, createPuzzle,updatePuzzle,deletpPuzzles };
+module.exports = { getAllPuzzles, getPuzzle, createPuzzle,updatePuzzle,deletePuzzles };

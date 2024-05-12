@@ -3,7 +3,7 @@ const {
   getPuzzle,
   createPuzzle,
   updatePuzzle,
-  deletpPuzzles
+  deletePuzzles
 } = require("../contoladores/Puzzle");
 
 const puzzlesRouter = require("express").Router();
@@ -13,6 +13,6 @@ puzzlesRouter.get("/:id", getPuzzle);
 puzzlesRouter.post("/", createPuzzle);
 
 puzzlesRouter.put("/:id", updatePuzzle);
-puzzlesRouter.delete("/:id", updatePuzzle);
+puzzlesRouter.delete("/:id", deletePuzzles);
 
 module.exports = { puzzlesRouter };
