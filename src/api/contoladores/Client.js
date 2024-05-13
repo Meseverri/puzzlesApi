@@ -4,7 +4,7 @@ const Client = require("../modelos/Client");
 const getUser= async (req,res,next)=>{
     try {
         const {id}=req.params;
-        const user = await Client.findById(id).populate("puzzles");
+        const user = await Client.findById(id).populate("cart");
         return res.status(200).json(user)
     } catch (error) {
         return res.status(400).json("error-> "+error);

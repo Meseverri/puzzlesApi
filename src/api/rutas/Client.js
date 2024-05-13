@@ -5,6 +5,7 @@ const {
 }=require("../contoladores/Client");
 
 const clientRouter=require("express").Router();
+
 clientRouter.get("/:id",getUser);
 clientRouter.put("/:id",modifyUser);
 clientRouter.post("/",createUser);
