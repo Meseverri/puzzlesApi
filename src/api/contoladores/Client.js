@@ -37,7 +37,7 @@ const modifyUser = async (req, res) => {
           $push: { cart: newToCart },
         },
         { new: true }
-      );
+      ).populate("cart");
     } else if (newToCart) {
       updatedClient = await Client.findByIdAndUpdate(
         id,
@@ -45,7 +45,7 @@ const modifyUser = async (req, res) => {
           $push: { cart: newToCart },
         },
         { new: true }
-      );
+      ).populate("cart");
     } else if (modifiedName) {
       updatedClient = await Client.findByIdAndUpdate(
         id,
@@ -53,7 +53,7 @@ const modifyUser = async (req, res) => {
           name: modifiedName,
         },
         { new: true }
-      );
+      ).populate("cart");
     }
 
     return res.status(200).json(updatedClient);
