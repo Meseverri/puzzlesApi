@@ -23,39 +23,50 @@ const createUser = async (req, res) => {
 const modifyUser = async (req, res) => {
   try {
     //agarramos el id de los parametros
+    // const { id } = req.params;
+    // const newToCart = req.body.cart;
+    // const modifiedName = req.body.name;
+
+    // let updatedClient;
+    // //Aqui valida
+    // if (modifiedName && newToCart) {
+    //   updatedClient = await Client.findByIdAndUpdate(
+    //     id,
+    //     {
+    //       name: modifiedName,
+    //       $push: { cart: newToCart },
+    //     },
+    //     { new: true }
+    //   ).populate("cart");
+    // } else if (newToCart) {
+    //   updatedClient = await Client.findByIdAndUpdate(
+    //     id,
+    //     {
+    //       $push: { cart: newToCart },
+    //     },
+    //     { new: true }
+    //   ).populate("cart");
+    // } else if (modifiedName) {
+    //   updatedClient = await Client.findByIdAndUpdate(
+    //     id,
+    //     {
+    //       name: modifiedName,
+    //     },
+    //     { new: true }
+    //   ).populate("cart");
+    // }
     const { id } = req.params;
-    const newToCart = req.body.cart;
-    const modifiedName = req.body.name;
-
-    let updatedClient;
-    //Aqui valida
-    if (modifiedName && newToCart) {
-      updatedClient = await Client.findByIdAndUpdate(
-        id,
-        {
-          name: modifiedName,
-          $push: { cart: newToCart },
-        },
-        { new: true }
-      ).populate("cart");
-    } else if (newToCart) {
-      updatedClient = await Client.findByIdAndUpdate(
-        id,
-        {
-          $push: { cart: newToCart },
-        },
-        { new: true }
-      ).populate("cart");
-    } else if (modifiedName) {
-      updatedClient = await Client.findByIdAndUpdate(
-        id,
-        {
-          name: modifiedName,
-        },
-        { new: true }
-      ).populate("cart");
-    }
-
+    const { cart: newToCart, name: modifiedName } = req.body;
+    
+    const updateFields = {};
+    if (modifiedName) updateFields.name = modifiedName;
+    if (newToCart) updateFields.$push = { cart: newToCart };
+    
+    const updatedClient = await Client.findByIdAndUpdate(
+      id,
+      updateFields,
+      { new: true }
+    ).populate("cart");
     return res.status(200).json(updatedClient);
   } catch (error) {
     return res.status(400).json("error " + error);
